@@ -11,3 +11,5 @@ public interface RestaurantBookingRepo extends MongoRepository<ReservationModel,
     boolean existsByEmail(String email);
 }
 
+
+// ApplicationController --> Model --> Repo

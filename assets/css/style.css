@@ -178,11 +178,10 @@ body {
   background-color: var(--eerie-black-1);
   color: var(--white);
   font-family: var(--fontFamily-dm_sans);
-  font-size: var(--fontSize-body-4);
+  font-size: clamp(1rem, 2vw, 1.6rem);
   font-weight: var(--weight-regular);
   line-height: var(--lineHeight-5);
-  overflow: hidden;
-  height: 300vh;
+  overflow-x: hidden;
 }
 
 body.loaded { overflow: overlay; }
@@ -410,6 +409,7 @@ body.nav-active { overflow: hidden; }
 .grid-list {
   display: grid;
   gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));  
 }
 
 .hover\:shine { position: relative; }
@@ -952,19 +952,16 @@ body.nav-active { overflow: hidden; }
   left: 0;
   width: 100%;
   height: 100%;
-  transform: scale(1.15);
-  pointer-events: none;
-  user-select: none;
+  min-height: 220px;
   z-index: -1;
 }
 
-.hero .slider-item.active .slider-bg {
-  animation: smoothScale 7s linear forwards;
-}
-
-@keyframes smoothScale {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.15); }
+.hero .slider-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .hero .section-subtitle::after { margin-block: 14px 20px; }
@@ -2474,4 +2471,182 @@ textarea.input-field {
     left: 0;
   }
 
+}
+
+/* Extra small devices (phones, 320px and up) */
+@media (max-width: 375px) {
+  .container {
+    padding-inline: 6px;
+  }
+  .grid-list {
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  .btn {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+  }
+  .section-title, .headline-1, .headline-2 {
+    font-size: 1.5rem;
+  }
+  .slide, .testimonial-slider, .testi {
+    padding: 10px 2px;
+  }
+  .profile .img {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* ===================== RESPONSIVE FIXES FOR HEADER, NAVBAR, HERO, TESTIMONIAL ===================== */
+
+/* 1. Header & Navbar: Mobile-first adjustments */
+@media (max-width: 575px) {
+  .header {
+    padding-block: 16px;
+  }
+  .header .container {
+    flex-wrap: wrap;
+    gap: 0;
+    padding-inline: 6px;
+  }
+  .header .logo img {
+    width: 140px;
+    height: auto;
+  }
+  .header .btn {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    margin-inline-start: 0;
+  }
+  .nav-open-btn {
+    display: block;
+    padding: 8px;
+  }
+  .navbar {
+    max-width: 90vw;
+    width: 90vw;
+    left: -100vw;
+    padding-inline: 10px;
+    padding-block-end: 20px;
+    font-size: 1.1rem;
+  }
+  .navbar.active {
+    transform: translateX(100vw);
+  }
+  .navbar .logo img {
+    width: 100px;
+    height: auto;
+  }
+  .navbar-list {
+    margin-block-end: 40px;
+    padding-inline: 0;
+  }
+  .navbar-link {
+    font-size: 1.1rem;
+    padding-block: 8px;
+  }
+  .navbar .close-btn {
+    margin-block: 10px 10px;
+    padding: 2px;
+  }
+}
+
+/* 2. Hero Section: Mobile adjustments */
+@media (max-width: 575px) {
+  .hero {
+    min-height: 320px;
+    padding-block: 40px;
+  }
+  .hero .slider-bg {
+    min-height: 180px;
+    height: 220px;
+  }
+  .hero .slider-bg img {
+    min-height: 180px;
+    height: 220px;
+  }
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+  .hero-text {
+    font-size: 1.1rem;
+    margin-block: 8px 20px;
+  }
+  .hero .btn {
+    font-size: 1rem;
+    padding: 8px 18px;
+  }
+  .hero-btn {
+    width: 70px;
+    height: 70px;
+    bottom: 10px;
+    right: 10px;
+    transform: scale(0.7);
+  }
+  .hero .slider-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+    top: unset;
+    bottom: 10px;
+    left: 10px;
+    right: unset;
+    position: absolute;
+  }
+  .hero .slider-btn.next {
+    left: unset;
+    right: 10px;
+  }
+}
+
+/* 3. Testimonial Section: Mobile adjustments */
+@media (max-width: 575px) {
+  .testi {
+    padding-block: 40px;
+  }
+  .testimonial-slider {
+    max-width: 100vw;
+    padding-inline: 0;
+  }
+  .slide {
+    padding: 10px 2px;
+    min-height: 220px;
+  }
+  .testi-text {
+    font-size: 1rem;
+  }
+  .profile .img {
+    width: 60px;
+    height: 60px;
+  }
+  .testimonial-slider .prev,
+  .testimonial-slider .next {
+    position: absolute;
+    top: unset;
+    bottom: 10px;
+    left: 10px;
+    right: unset;
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+    padding: 6px;
+    z-index: 2;
+  }
+  .testimonial-slider .next {
+    left: unset;
+    right: 10px;
+  }
+}
+
+/* 4. General: Prevent horizontal scroll */
+body, html {
+  overflow-x: hidden;
+}
+
+/* 5. General: Make all images responsive */
+img, .img-cover {
+  max-width: 100%;
+  height: auto;
 }
